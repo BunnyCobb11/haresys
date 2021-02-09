@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<br>
+<strong>
+<h7>当前({{crsum|count}})个机房：{% for i in crsum %}
+    【{{i}}】
+    {% endfor %}</h7>
+<h7>（{{device_count}})台设备</h7></strong>
+<br><br>
+<!--xlsx开始-->
+<table width="1200"  border="1" cellpadding="10">
+    <tr>
+        <th width="10%" bgcolor="CornflowerBlue">{{xlsdb_columns[1]}}</th>
+        <th width="10%" bgcolor="CornflowerBlue">{{xlsdb_columns[3]}}</th>
+        <th width="10%" bgcolor="CornflowerBlue">{{xlsdb_columns[5]}}</th>
+        <th width="10%" bgcolor="CornflowerBlue">{{xlsdb_columns[6]}}</th>
+        <th width="10%" bgcolor="CornflowerBlue">{{xlsdb_columns[9]}}</th>
+        <th width="10%" bgcolor="CornflowerBlue">{{xlsdb_columns[10]}}</th>
+        <th width="40%" bgcolor="CornflowerBlue">{{xlsdb_columns[11]}}</th>
+    </tr>
+{% for i in range(0,device_count) %}
+    <tr>
+        <td width="10%"><a href="#">{{readxls[i][1]}}</a></td>
+        <td width="10%">{{readxls[i][3]}}</td>
+        <td width="10%"><a href="{{url_for('core.croompage',mangeip=readxls[i][5],crdev=i)}}">{{readxls[i][5]}}</a></td>
+        <td width="10%">{{readxls[i][6]}}</td>
+        <td width="10%">{{readxls[i][9]}}</td>
+        <td width="10%">{{readxls[i][10]}}</td>
+        <td width="40%">{{readxls[i][11]}}</td>
+    </tr>
+{% endfor %}
+</table>
+    <!--xlsx结束-->
+{% endblock %}

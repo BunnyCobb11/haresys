@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<br>
+<div class="jumbotron">
+    <h7>{{result_type}}-{{result_count}}-{{result_sum}}字</h7>
+    <ul>
+        <!-- utf8编码-->
+        {% if '<html>' not in receive  %}
+            {% if result_count <= 0 %}
+                <h5>#12</h5>
+                <li>{{receive}}</li>
+            {% else %}
+            <h5>#15</h5>
+            {% for i in range(0,result_count+1)%}
+                <li>{{receive.splitlines()[i]}}</li>
+            {% endfor %}
+            {% endif %}
+        <!-- gbk编码-->
+        {% else %}
+            <h5>#22</h5>
+            {{receive}}
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}
