@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<span class="badge badge-danger">添加代理主机</span><br><br>
+
+
+<strong>代理主机列表：</strong>
+<br><br>
+<ol>
+    {% for i in range(0,n)%}
+        <li>{{resultall[i]}}</li>
+    {% endfor %}
+</ol>
+
+<form method="POST">
+    {{form.hidden_tag()}}
+    {{form.remarks.label}}{{form.remarks(class='form-control')}}
+    {{form.address.label}}{{form.address(class='form-control')}}
+    {{form.port.label}}{{form.port(class='form-control')}}
+    {{form.username.label}}{{form.username(class='form-control')}}
+    {{form.password.label}}{{form.password(class='form-control')}}
+    <br>
+    <div class="form-group"> {{ form.submit(class="btn btn-primary") }}</div>
+  </form>
+{% endblock %}

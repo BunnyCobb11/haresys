@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link href="{{url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static',filename='css/style.css')}}" rel="stylesheet">
+    <script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static',filename='js/jquery.slim.min.js')}}"></script>
+    <script src="{{url_for('static',filename='js/popper.min.js')}}"></script>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body> 
+    <ul class='nav'>
+      <li class='nav-link'>
+        <a href="{{url_for('core.index')}}">Home</a>
+      </li>
+      {% if current_user.is_authenticated %}
+      <li class='nav-link'><a href="{{url_for('users.logout')}}">Log Out</a></li>
+      <li class='nav-link'><a href="{{url_for('users.account')}}">我的账户</a></li>
+      <li class='nav-link'><a href="{{url_for('network.sshx')}}">远程服务器</a></li>
+      <li class='nav-link'><a href="{{url_for('network.sshx_rs')}}">远程路由交换</a></li>
+      <li class='nav-link'><a href="{{url_for('network.proxy')}}">添加代理主机</a></li>
+      <li class='nav-link'><a href="{{url_for('network.tracert')}}">路由跟踪测试</a></li>
+      <li class='nav-link'><a href="{{url_for('core.croom')}}">IDC</a></li>
+      {% else %}
+      <li class='nav-link'><a href="{{url_for('users.login')}}">Log In</a></li>
+      <li class='nav-link'><a href="{{url_for('users.register')}}">Register</a></li> 
+      {% endif %}
+    </ul>
+<div class="container">
+  {% block content %}
+
+  {% endblock %}
+</div>
+</body>
+</html>

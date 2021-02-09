@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<span class="badge badge-danger">路由MTR测试</span><br><br>
+
+<div>
+    <form method="post">
+      {{form.hidden_tag()}}
+      <div class="col-3">{{form.address(class='form-control')}}</div><br>
+      <div class="col-3">{{form.proxyid(class='form-control',placeholder='IPv4')}}</div><br>
+      <div class="form-group"> {{ form.submit(class="btn btn-primary") }}</div>
+    </form>
+</div>
+
+<div class="jumbotron">
+    <ol>
+      {% for i in range(0,n)%}
+        <li>{{echo.splitlines()[i]}}</li>
+      {% endfor %}
+    </ol>
+</div>
+{% endblock %}

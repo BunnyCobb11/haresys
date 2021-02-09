@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<span class="badge badge-danger">Linux远程管理</span><br><br>
+
+  <div>
+    <form method="post">
+      {{form.hidden_tag()}}
+      <div class="col-3">{{form.address(class='form-control',placeholder='IP地址')}}</div><br>
+      <div class="col-3">{{form.port(class='form-control',placeholder='端口')}}</div><br>
+      <div class="col-3">{{form.username(class='form-control',placeholder='用户名')}}</div><br>
+      <div class="col-3">{{form.password(class='form-control',placeholder='密码')}}</div><br>
+      <div class="col-7">{{form.command(class='form-control',placeholder='指令')}}</div><br>
+      <div class="form-group"> {{ form.submit(class="btn btn-primary") }}</div>
+    </form>
+  </div>
+  <br>
+  <div class="jumbotron">
+    <ol>
+        {% for i in range(0,n)%}
+            <li>{{echo.splitlines()[i]}}</li>
+        {% endfor %}
+    </ol>
+  </div>
+{% endblock %}
