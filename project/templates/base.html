@@ -21,7 +21,8 @@
       <li class='nav-link'><a href="{{url_for('network.sshx_rs')}}">远程路由交换</a></li>
       <li class='nav-link'><a href="{{url_for('network.proxy')}}">添加代理主机</a></li>
       <li class='nav-link'><a href="{{url_for('network.tracert')}}">路由跟踪测试</a></li>
-      <li class='nav-link'><a href="{{url_for('core.croom')}}">IDC</a></li>
+      <li class='nav-link'><a href="{{url_for('core.croom')}}">IDC管理</a></li>
+      <li class='nav-link'><a href="{{url_for('core.noc')}}">IDC监控设置</a></li>
       {% else %}
       <li class='nav-link'><a href="{{url_for('users.login')}}">Log In</a></li>
       <li class='nav-link'><a href="{{url_for('users.register')}}">Register</a></li> 

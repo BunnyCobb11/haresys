@@ -1,6 +1,6 @@
 import pandas as pd
 
-class CRPAGE:
+class Crpage:
     def __init__(self,path):
         '''获取文件url'''
         self.path = path
