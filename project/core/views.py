@@ -4,17 +4,13 @@ import pandas as pd
 import os
 from project.core.models import Crpage
 from project.collection.mail import Emailmodule
+from project.library.forms import MailForm
 
 core = Blueprint('core',__name__)
 
 @core.route('/')          #首页
 def index():
-    emailDB = Emailmodule()
-    receive = emailDB.receive_imap4()
-    result_type = type(receive)
-    result_count = receive.count('\n')
-    result_sum = len(receive)
-    return render_template('index.html',result_type=result_type,receive=receive,result_count=result_count,result_sum=result_sum)
+    return render_template('index.html')
 
 @core.route('/croom',methods=['GET','POST'])  #IDC管理页面
 def croom():
@@ -27,7 +23,7 @@ def croom():
                           )
 @core.route('/croompage')  #设备页面
 def croompage():
-    d = CRPAGE('D:\\virtualenv\\ven-flask\\data\\idccr.xlsx')
+    d = Crpage('D:\\virtualenv\\ven-flask\\data\\idccr.xlsx')
     xlsdb_columns = d.xlsdb_columns()
     readxls = d.readxls()
     if request.method == 'GET':
@@ -36,6 +32,20 @@ def croompage():
     return render_template('croompage.html',xlsdb_columns=xlsdb_columns,readxls=readxls,mangeip=mangeip,crdev=int(crdev))
 
 @core.route('/nocpage',methods=['GET','POST'])
-def noc():
-
-    return render_template('noc.html')
+def nocpage():
+    form = MailForm()
+    result_type = None
+    receive = ''
+    result_count = 0
+    result_sum = 0
+    if form.validate_on_submit():
+        user = form.usermail.data
+        passwd = form.password.data
+        server = form.serveraddr.data
+        port = form.port.data
+        emailDB = Emailmodule()
+        receive = emailDB.receive_imap4(user,passwd,server,port)
+        result_type = type(receive)
+        result_count = receive.count('\n')
+        result_sum = len(receive)
+    return render_template('nocsettings.html',form=form,result_type=result_type,receive=receive,result_count=result_count,result_sum=result_sum)

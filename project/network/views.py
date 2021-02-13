@@ -9,7 +9,7 @@ network = Blueprint("network",__name__)
 @network.route("/sshx",methods=['GET','POST'])
 def sshx():
     form = SshxForm()
-    echo = ''
+    echo = None
     n = 0
     if form.validate_on_submit():
         ip = form.address.data
@@ -25,7 +25,7 @@ def sshx():
 @network.route("/sshx_rs",methods=['GET','POST'])
 def sshx_rs():
     form = SshxForm()
-    echo = ''
+    echo = None
     n = 0
     if form.validate_on_submit():
         ip = form.address.data
@@ -63,8 +63,8 @@ def proxy():
 def tracert():
     form = TestForm()
     form.address.choices = [(v.address,v.remarks) for v in Proxy.query.all()]
-    proxy = []
-    echo = ''
+    proxy = None
+    echo = None
     n = 0
     if request.method=='POST' and form.validate_on_submit():
         commands = 'mtr -n -r ' + form.proxyid.data

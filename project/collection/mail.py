@@ -101,28 +101,28 @@ class Emailmodule:
         email_server.close()
 
     # 此函数通过使用imaplib实现接收邮件
-    def receive_imap4(self):
+    def receive_imap4(self,user,passwd,serveraddr,port):
         # 邮箱
-        email_address = ""
+        self.email_address = user
         # 密码
-        email_password = ''
+        self.email_password = passwd
         # imap服务器
-        imap_server_host = ""
+        self.imap_server_host = serveraddr
         # 监听端口
-        imap_server_port = '993'
+        self.imap_server_port = port
 
         #连接服务器
         try:
             # SSL方式连接服务器
-            email_server = imaplib.IMAP4_SSL(host=imap_server_host, port=imap_server_port)
+            email_server = imaplib.IMAP4_SSL(host=self.imap_server_host, port=self.imap_server_port)
             print('正在连接服务器...')
         except:
             print('服务器连接失败!')
             exit(1)
         try:
             # 验证
-            email_server.login(email_address,email_password)
-            print("正在验证用户名密码,登录中...")
+            email_server.login(self.email_address,self.email_password)
+            print("系统正在登录中...")
         except:
             print('用户名密码错误！')
             exit(1)

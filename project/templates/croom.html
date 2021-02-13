@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 <br>
+<br>
 <strong>
 <h7>当前({{crsum|count}})个机房：{% for i in crsum %}
     【{{i}}】
     {% endfor %}</h7>
-<h7>（{{device_count}})台设备</h7></strong>
+<h7>（{{device_count}})台设备</h7></strong>&nbsp&nbsp&nbsp&nbsp<a href="{{url_for('core.nocpage')}}">设置监控邮箱</a>
 <br><br>
 <!--xlsx开始-->
 <table width="1200"  border="1" cellpadding="10">
