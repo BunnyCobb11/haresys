@@ -31,7 +31,7 @@ def croompage():
         crdev = request.args.get('crdev')
     return render_template('croompage.html',xlsdb_columns=xlsdb_columns,readxls=readxls,mangeip=mangeip,crdev=int(crdev))
 
-@core.route('/nocpage',methods=['GET','POST'])
+@core.route('/nocsetting',methods=['GET','POST'])
 def nocpage():
     form = MailForm()
     result_type = None

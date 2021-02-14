@@ -53,41 +53,57 @@ class Proxy(db.Model):
 
 class Crbj(db.Model):
 
-    __tablename__ = 'crbj'
+    __tablename__ = 'idccr'
 
     id = db.Column(db.Integer,primary_key=True)
-    region = db.Column(db.String(64))
-    croom_name = db.Column(db.String(64))
-    croom_att = db.Column(db.String(64))
-    devidc_name = db.Column(db.String(64))
-    running_time = db.Column(db.String(64))
-    manage_ip = db.Column(db.String(64))
-    line_att = db.Column(db.String(64))
-    line_info = db.Column(db.String(64))
-    state = db.Column(db.String(64))
-    inter_port = db.Column(db.String(64))
-    inter_vlan = db.Column(db.String(64))
-    inter_ip = db.Column(db.String(64))
-    resources_ip = db.Column(db.String(64))
-    location = db.Column(db.String(128))
+    CrName = db.Column(db.String(64))
+    CrAttributes = db.Column(db.String(64))
+    DevName = db.Column(db.String(64))
+    RuningTime = db.Column(db.String(64))
+    ManagementIP = db.Column(db.String(64))
+    ISPAttributes = db.Column(db.String(64))
+    Status = db.Column(db.String(64))
+    LinkAttributes = db.Column(db.String(64))
+    LinkPort = db.Column(db.String(64))
+    LinkVLAN = db.Column(db.String(64))
+    LinkIP = db.Column(db.String(64))
+    BroadcastAddress = db.Column(db.String(64))
+    Address = db.Column(db.String(64))
 
-    def __init__(self,region,croom_name,croom_att,device_name,
-                 running_time,mange_ip,line_att,line_info,state,inter_port,
-                 inter_vlan,inter_ip,resources_ip,location):
-        self.region = region
-        self.croom_name = croom_name
-        self.croom_att = croom_att
-        self.devidc_name = device_name
-        self.running_time = running_time
-        self.manage_ip = mange_ip
-        self.line_att = line_att
-        self.line_info = line_info
-        self.state = state
-        self.inter_port = inter_port
-        self.inter_vlan = inter_vlan
-        self.inter_ip = inter_ip
-        self.resources_ip = resources_ip
-        self.location = location
+    def __init__(self,CrName,CrAttributes,DevName,RuningTime,ManagementIP,ISPAttributes,Status,LinkAttributes,LinkPort,LinkVLAN,LinkIP,BroadcastAddress,Address):
+        self.CrName = CrName
+        self.CrAttributes = CrAttributes
+        self.DevName = DevName
+        self.RuningTime = RuningTime
+        self.ManagementIP = ManagementIP
+        self.ISPAttributes = ISPAttributes
+        self.Status = Status
+        self.LinkAttributes = LinkAttributes
+        self.LinkPort = LinkPort
+        self.LinkVLAN = LinkVLAN
+        self.LinkIP = LinkIP
+        self.BroadcastAddress = BroadcastAddress
+        self.Address = Address
 
     def __repr__(self):
-        return  f"{self.manage_ip}"
+        return  f"{self.ManagementIP}"
+
+class NocMail(db.Model):
+
+    __tablename__ = 'NocMail'
+
+    id = db.Column(db.Integer,primary_key=True)
+    email = db.Column(db.String(64),unique=True,index=True)
+    password_hash = db.Column(db.String(128))
+    serveraddress = db.Column(db.String(128))
+    port = db.Column(db.String(32))
+
+    def __init__(self,email,password,serveraddress,port):
+        self.email = email
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self,password):
+        return check_password_hash(self.password_hash,password)
+
+    def __repr__(self):
+        return f'{self.email}'
