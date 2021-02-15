@@ -1,18 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
 <br>
-    <strong><h7>邮箱登录</h7></strong>&nbsp&nbsp&nbsp<a href="{{url_for('core.croom')}}">返回</a>
+<strong><h7>邮箱登录</h7></strong>&nbsp&nbsp&nbsp<a style="float: right;" href="{{url_for('core.croom')}}">返回</a>
+
 <div>
     <form method='POST'>
+        {{form.csrf_token}}
         {{form.hidden_tag()}}
         <div class="col-5">{{form.usermail.label}}{{form.usermail(class='form-control')}}</div>
         <div class="col-5">{{form.password.label}}{{form.password(class='form-control')}}</div>
         <div class="col-5">{{form.serveraddr.label}}{{form.serveraddr(class='form-control')}}</div>
-        <div class="col-5">{{form.port.label}}{{form.port(class='form-control')}}</div>
-        <br>
+        <div class="col-5">{{form.port.label}}{{form.port(class='form-control')}}</div><br>
         <div class="form-group"> {{ form.submit(class="btn btn-primary") }}</div>
     </form>
 </div>
+
+<br>
+<div>
+    <form method='POST'>
+        {{formd.csrf_token}}
+        {{form.hidden_tag()}}
+        <div class="col-5">{{formd.usermaild.label}}{{formd.usermaild(class='form-control')}}</div><br>
+        <div class="form-group"> {{ formd.submit(class="btn btn-primary") }}</div>
+    </form>
+</div>
+
 <div class="jumbotron">
     <h7>{{result_type}}-{{result_count}}-{{result_sum}}字</h7>
     <ul>

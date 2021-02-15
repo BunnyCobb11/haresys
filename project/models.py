@@ -94,16 +94,15 @@ class NocMail(db.Model):
 
     id = db.Column(db.Integer,primary_key=True)
     email = db.Column(db.String(64),unique=True,index=True)
-    password_hash = db.Column(db.String(128))
+    password = db.Column(db.String(128))
     serveraddress = db.Column(db.String(128))
     port = db.Column(db.String(32))
 
     def __init__(self,email,password,serveraddress,port):
         self.email = email
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self,password):
-        return check_password_hash(self.password_hash,password)
+        self.password = password
+        self.serveraddress = serveraddress
+        self.port = port
 
     def __repr__(self):
         return f'{self.email}'

@@ -1,10 +1,13 @@
 # coding: utf8
-from flask import Flask,request,render_template,Blueprint,redirect
+from flask import Flask,request,render_template,Blueprint,redirect,flash
+from werkzeug.security import check_password_hash
 import pandas as pd
 import os
 from project.core.models import Crpage
 from project.collection.mail import Emailmodule
-from project.library.forms import MailForm
+from project.library.forms import MailForm,MailFormd
+from project.models import NocMail
+from project import db
 
 core = Blueprint('core',__name__)
 
@@ -29,11 +32,13 @@ def croompage():
     if request.method == 'GET':
         mangeip = request.args.get('mangeip')
         crdev = request.args.get('crdev')
-    return render_template('croompage.html',xlsdb_columns=xlsdb_columns,readxls=readxls,mangeip=mangeip,crdev=int(crdev))
+    return render_template('croompage.html',xlsdb_columns=xlsdb_columns,readxls=readxls,
+                            mangeip=mangeip,crdev=int(crdev))
 
 @core.route('/nocsetting',methods=['GET','POST'])
 def nocpage():
     form = MailForm()
+    formd = MailFormd()
     result_type = None
     receive = ''
     result_count = 0
@@ -43,9 +48,32 @@ def nocpage():
         passwd = form.password.data
         server = form.serveraddr.data
         port = form.port.data
+
         emailDB = Emailmodule()
-        receive = emailDB.receive_imap4(user,passwd,server,port)
+        receive = emailDB.server_imap4(user,passwd,server,port)
         result_type = type(receive)
         result_count = receive.count('\n')
         result_sum = len(receive)
-    return render_template('nocsettings.html',form=form,result_type=result_type,receive=receive,result_count=result_count,result_sum=result_sum)
+
+        nocmail = NocMail(email=user,
+                            password=passwd,
+                            serveraddress=server,
+                            port=port)
+        dbmail = NocMail.query.filter_by(email=user).count()
+        if dbmail == 0:
+            db.session.add(nocmail)
+            db.session.commit()
+            flash("commit")
+
+    formd.usermaild.choices = [(v.email) for v in NocMail.query.all()]
+    if formd.usermaild.choices:
+        maild = NocMail.query.filter_by(email=formd.usermaild.choices[0]).first()
+        if formd.validate_on_submit:
+            emailDB = Emailmodule()
+            receive = emailDB.server_imap4(maild.email,maild.password,maild.serveraddress,maild.port)
+            result_type = type(receive)
+            result_count = receive.count('\n')
+            result_sum = len(receive)
+
+    return render_template('nocsettings.html',form=form,formd=formd,result_type=result_type,
+                            receive=receive,result_count=result_count,result_sum=result_sum)

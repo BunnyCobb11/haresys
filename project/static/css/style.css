@@ -1,4 +1,16 @@
 .nav{
     margin-top: 0rem;
-    background-image: linear-gradient(190deg,rgb(233, 175, 175) 25%,rgb(214, 224, 220) )
+    background-image: linear-gradient(190deg,rgb(16, 52, 100) 25%,rgb(85, 133, 196) )
+}
+
+li.nav-link>a {
+    color: floralwhite;
+}
+
+#croom11a {
+    float: right;
+}
+
+.jumbotron {
+    background-color:#3174dab2;
 }

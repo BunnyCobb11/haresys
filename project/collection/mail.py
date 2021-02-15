@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 
 class Emailmodule:
     # 此函数通过使用smtplib实现发送邮件
-    def send_smtp(self):
+    def receive_smtp(self):
         # 用于发送邮件的邮箱。修改成自己的邮箱
         sender_email_address = "your_email@qq.com"
         # 用于发送邮件的邮箱的密码。修改成自己的邮箱的密码
@@ -54,7 +54,7 @@ class Emailmodule:
             email_client.close()
 
     # 此函数通过使用poplib实现接收邮件
-    def receive_pop3(self):
+    def server_pop3(self):
         # 要进行邮件接收的邮箱。改成自己的邮箱
         email_address = "your_email@qq.com"
         # 要进行邮件接收的邮箱的密码。改成自己的邮箱的密码
@@ -101,7 +101,7 @@ class Emailmodule:
         email_server.close()
 
     # 此函数通过使用imaplib实现接收邮件
-    def receive_imap4(self,user,passwd,serveraddr,port):
+    def server_imap4(self,user,passwd,serveraddr,port):
         # 邮箱
         self.email_address = user
         # 密码
@@ -120,7 +120,7 @@ class Emailmodule:
             print('服务器连接失败!')
             exit(1)
         try:
-            # 验证
+        # 验证
             email_server.login(self.email_address,self.email_password)
             print("系统正在登录中...")
         except:

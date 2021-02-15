@@ -6,18 +6,21 @@
 <h7>当前({{crsum|count}})个机房：{% for i in crsum %}
     【{{i}}】
     {% endfor %}</h7>
-<h7>（{{device_count}})台设备</h7></strong>&nbsp&nbsp&nbsp&nbsp<a href="{{url_for('core.nocpage')}}">设置监控邮箱</a>
+<h7>（{{device_count}})台设备</h7></strong>
+
+<a id="croom11a" href="{{url_for('core.nocpage')}}">设置监控邮箱</a>
+
 <br><br>
 <!--xlsx开始-->
 <table width="1200"  border="1" cellpadding="10">
     <tr>
-        <th width="10%" bgcolor="CornflowerBlue">{{xlsdb_columns[1]}}</th>
-        <th width="10%" bgcolor="CornflowerBlue">{{xlsdb_columns[3]}}</th>
-        <th width="10%" bgcolor="CornflowerBlue">{{xlsdb_columns[5]}}</th>
-        <th width="10%" bgcolor="CornflowerBlue">{{xlsdb_columns[6]}}</th>
-        <th width="10%" bgcolor="CornflowerBlue">{{xlsdb_columns[9]}}</th>
-        <th width="10%" bgcolor="CornflowerBlue">{{xlsdb_columns[10]}}</th>
-        <th width="40%" bgcolor="CornflowerBlue">{{xlsdb_columns[11]}}</th>
+        <th width="10%" bgcolor="#20c997">{{xlsdb_columns[1]}}</th>
+        <th width="10%" bgcolor="#20c997">{{xlsdb_columns[3]}}</th>
+        <th width="10%" bgcolor="#20c997">{{xlsdb_columns[5]}}</th>
+        <th width="10%" bgcolor="#20c997">{{xlsdb_columns[6]}}</th>
+        <th width="10%" bgcolor="#20c997">{{xlsdb_columns[9]}}</th>
+        <th width="10%" bgcolor="#20c997">{{xlsdb_columns[10]}}</th>
+        <th width="40%" bgcolor="#20c997">{{xlsdb_columns[11]}}</th>
     </tr>
 {% for i in range(0,device_count) %}
     <tr>
