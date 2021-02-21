@@ -42,7 +42,7 @@ def login():
             if user.check_password(form.password.data) and user is not None:
 
                 login_user(user)
-                flash('Log in Success!')
+                flash('登录成功')
 
                 next = request.args.get('next')
 

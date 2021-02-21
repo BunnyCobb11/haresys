@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+
+<a id="cssfr" href="{{url_for('core.nocsetting')}}">返回</a>
+
+<div>
+    <form method='POST'>
+        {{form.csrf_token}}
+        {{form.hidden_tag()}}
+        <div class="col-5">{{form.usermail.label}}{{form.usermail(class='form-control')}}</div>
+        <div class="col-5">{{form.password.label}}{{form.password(class='form-control')}}</div>
+        <div class="col-5">{{form.serveraddr.label}}{{form.serveraddr(class='form-control')}}</div>
+        <div class="col-5">{{form.port.label}}{{form.port(class='form-control')}}</div><br>
+        <div class="form-group"> {{ form.submit(class="btn btn-primary") }}</div>
+    </form>
+</div>
+
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-danger">{{ message }}</div>
+{% endfor %}
+
+{% endblock %}

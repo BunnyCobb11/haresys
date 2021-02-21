@@ -56,21 +56,23 @@ class Crbj(db.Model):
     __tablename__ = 'idccr'
 
     id = db.Column(db.Integer,primary_key=True)
+    Area = db.Column(db.String(64))
     CrName = db.Column(db.String(64))
     CrAttributes = db.Column(db.String(64))
     DevName = db.Column(db.String(64))
     RuningTime = db.Column(db.String(64))
-    ManagementIP = db.Column(db.String(64))
+    ManagementIP = db.Column(db.String(64),unique=True)
     ISPAttributes = db.Column(db.String(64))
     Status = db.Column(db.String(64))
     LinkAttributes = db.Column(db.String(64))
     LinkPort = db.Column(db.String(64))
     LinkVLAN = db.Column(db.String(64))
     LinkIP = db.Column(db.String(64))
-    BroadcastAddress = db.Column(db.String(64))
-    Address = db.Column(db.String(64))
+    BroadcastAddress = db.Column(db.String(512))
+    Address = db.Column(db.String(128))
 
-    def __init__(self,CrName,CrAttributes,DevName,RuningTime,ManagementIP,ISPAttributes,Status,LinkAttributes,LinkPort,LinkVLAN,LinkIP,BroadcastAddress,Address):
+    def __init__(self,Area,CrName,CrAttributes,DevName,RuningTime,ManagementIP,ISPAttributes,Status,LinkAttributes,LinkPort,LinkVLAN,LinkIP,BroadcastAddress,Address):
+        self.Area = Area
         self.CrName = CrName
         self.CrAttributes = CrAttributes
         self.DevName = DevName

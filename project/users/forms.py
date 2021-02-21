@@ -7,16 +7,16 @@ from flask_login import current_user
 from project.models import User
 
 class LoginForm(FlaskForm):
-    email = StringField('Email',validators=[DataRequired(),Email()])
-    password = PasswordField('Password',validators=[DataRequired()])
-    submit = SubmitField('Log In')
+    email = StringField('邮箱：',validators=[DataRequired(),Email()])
+    password = PasswordField('密码：',validators=[DataRequired()])
+    submit = SubmitField('登录')
 
 class RegistrationForm(FlaskForm):
-    email = StringField('Email',validators=[DataRequired(),Email()])
-    username = StringField('UserName',validators=[DataRequired()])
-    password = PasswordField('Password',validators=[DataRequired(),EqualTo('pass_confirm',message='Passwords must match!')])
-    pass_confirm = PasswordField('Confirm Password',validators=[DataRequired()])
-    submit = SubmitField('Register!')
+    email = StringField('邮箱',validators=[DataRequired(),Email()])
+    username = StringField('用户名',validators=[DataRequired()])
+    password = PasswordField('密码：',validators=[DataRequired(),EqualTo('pass_confirm',message='Passwords must match!')])
+    pass_confirm = PasswordField('确认密码',validators=[DataRequired()])
+    submit = SubmitField('注册')
 
     def check_email(self,field):
         if User.query.filter_by(email=field.data).first():
@@ -31,7 +31,7 @@ class UpdateUserForm(FlaskForm):
 
     email = StringField('Email',validators=[DataRequired(),Email()])
     username = StringField('UserName',validators=[DataRequired()])
-    picture = FileField('Update Profile Picture',validators=[FileAllowed(['jpg','png'])])
+    picture = FileField('更新头像',validators=[FileAllowed(['jpg','png'])])
     submit = SubmitField('Update')
 
     def check_email(self,field):

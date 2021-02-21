@@ -1,5 +1,5 @@
 # coding: utf8
-from flask import Flask,request,render_template,Blueprint,redirect,flash
+from flask import Flask,request,render_template,Blueprint,redirect,flash,url_for
 from werkzeug.security import check_password_hash
 import pandas as pd
 import os
@@ -36,44 +36,47 @@ def croompage():
                             mangeip=mangeip,crdev=int(crdev))
 
 @core.route('/nocsetting',methods=['GET','POST'])
-def nocpage():
-    form = MailForm()
+def nocsetting():
     formd = MailFormd()
-    result_type = None
-    receive = ''
-    result_count = 0
-    result_sum = 0
-    if form.validate_on_submit():
-        user = form.usermail.data
-        passwd = form.password.data
-        server = form.serveraddr.data
-        port = form.port.data
-
-        emailDB = Emailmodule()
-        receive = emailDB.server_imap4(user,passwd,server,port)
-        result_type = type(receive)
-        result_count = receive.count('\n')
-        result_sum = len(receive)
-
-        nocmail = NocMail(email=user,
-                            password=passwd,
-                            serveraddress=server,
-                            port=port)
-        dbmail = NocMail.query.filter_by(email=user).count()
-        if dbmail == 0:
-            db.session.add(nocmail)
-            db.session.commit()
-            flash("commit")
-
+    result_type = None ;receive = '' ;result_count = 0 ;result_sum = 0
     formd.usermaild.choices = [(v.email) for v in NocMail.query.all()]
+    print(len(formd.usermaild.choices))
     if formd.usermaild.choices:
-        maild = NocMail.query.filter_by(email=formd.usermaild.choices[0]).first()
-        if formd.validate_on_submit:
+        if request.method=='POST' and formd.validate_on_submit():
+            maild = NocMail.query.filter_by(email=formd.usermaild.data).first()
             emailDB = Emailmodule()
+            print(maild.email)
             receive = emailDB.server_imap4(maild.email,maild.password,maild.serveraddress,maild.port)
             result_type = type(receive)
             result_count = receive.count('\n')
             result_sum = len(receive)
-
-    return render_template('nocsettings.html',form=form,formd=formd,result_type=result_type,
+            flash('选定账户:{:}'.format(maild.email))
+        else:
+            maild = NocMail.query.filter_by(email=formd.usermaild.choices[0]).first()
+            emailDB = Emailmodule()
+            print(maild.email)
+            receive = emailDB.server_imap4(maild.email,maild.password,maild.serveraddress,maild.port)
+            result_type = type(receive)
+            result_count = receive.count('\n')
+            result_sum = len(receive)
+            flash('选定账户:{:}'.format(maild.email))
+    else:
+        return redirect(url_for('core.nocsetting_email'))
+    return render_template('nocsetting.html',formd=formd,result_type=result_type,
                             receive=receive,result_count=result_count,result_sum=result_sum)
+
+@core.route('/nocsetting_email',methods=['GET','POST'])
+def nocsetting_email():
+    form = MailForm()
+    if form.validate_on_submit():
+        user = form.usermail.data;passwd = form.password.data;server = form.serveraddr.data;port = form.port.data
+        nocmail = NocMail(email=user,password=passwd,serveraddress=server,port=port)
+        dbmail = NocMail.query.filter_by(email=user).count()
+        if dbmail == 0:
+            db.session.add(nocmail)
+            db.session.commit()
+            flash("提交成功")
+        else:
+            flash('账户已经存在！')
+        return redirect(url_for('core.nocsetting_email'))
+    return render_template('nocsetting_email.html',form=form,flash=flash)

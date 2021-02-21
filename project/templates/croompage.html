@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <br>
+<a id="cssfr" href="{{url_for('core.croom')}}">返回</a>
 <ul>
 {% for c in range(0,xlsdb_columns|count) %}
-    <li><strong>{{xlsdb_columns[c]}}</strong>&nbsp:&nbsp<font color="red">{{readxls[crdev][c]}}</font></li>
+    <li>{{xlsdb_columns[c]}}&nbsp;:&nbsp;<font color="red">{{readxls[crdev][c]}}</font></li>
 {% endfor %}
 </ul>
 {% endblock %}

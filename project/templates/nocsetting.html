@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<strong><h7><a style="float: right;" href="{{url_for('core.nocsetting_email')}}">添加邮箱</a></h7></strong>
+<br>
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-primary">{{ message }}</div>
+{% endfor %}
+<br>
+<div>
+    <form method='POST'>
+        {{formd.csrf_token}}
+        {{formd.hidden_tag()}}
+        <div class="col-5">{{formd.usermaild(class='form-control')}}</div><br>
+        <div class="form-group"> {{ formd.submit(class="btn btn-primary") }}</div>
+    </form>
+</div>
+
+<div class="jumbotron">
+    <h7>{{result_type}}-{{result_count}}-{{result_sum}}字</h7>
+    <ul>
+
+        {% if '<html>' not in receive  %}
+            {% if result_count <= 0 %}
+                <h5>#12</h5>
+                <li>{{receive}}</li>
+            {% else %}
+            <h5>#15</h5>
+            {% for i in range(0,result_count+1)%}
+                <li>{{receive.splitlines()[i]}}</li>
+            {% endfor %}
+            {% endif %}
+
+        {% else %}
+            <h5>#22</h5>
+            {{receive}}
+        {% endif %}
+    </ul>
+</div>
+
+{% endblock %}

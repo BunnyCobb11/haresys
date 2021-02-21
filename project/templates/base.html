@@ -12,19 +12,20 @@
   <body> 
     <ul class='nav'>
       <li class='nav-link'>
-        <a href="{{url_for('core.index')}}">Home</a>
+        <a href="{{url_for('core.index')}}">首页</a>
       </li>
       {% if current_user.is_authenticated %}
-      <li class='nav-link'><a href="{{url_for('users.logout')}}">Log Out</a></li>
+      <li class='nav-link'><a href="{{url_for('users.logout')}}">退出</a></li>
       <li class='nav-link'><a href="{{url_for('users.account')}}">我的账户</a></li>
       <li class='nav-link'><a href="{{url_for('network.sshx')}}">远程服务器</a></li>
       <li class='nav-link'><a href="{{url_for('network.sshx_rs')}}">远程路由交换</a></li>
       <li class='nav-link'><a href="{{url_for('network.proxy')}}">添加代理主机</a></li>
       <li class='nav-link'><a href="{{url_for('network.tracert')}}">路由跟踪测试</a></li>
       <li class='nav-link'><a href="{{url_for('core.croom')}}">IDC管理</a></li>
+      <li class='nav-link'><a href="{{url_for('core.nocsetting')}}">设置监控邮箱</a></li>
       {% else %}
-      <li class='nav-link'><a href="{{url_for('users.login')}}">Log In</a></li>
-      <li class='nav-link'><a href="{{url_for('users.register')}}">Register</a></li> 
+      <li class='nav-link'><a href="{{url_for('users.login')}}">登录</a></li>
+      <li class='nav-link'><a href="{{url_for('users.register')}}">注册</a></li> 
       {% endif %}
     </ul>
 <div class="container">
