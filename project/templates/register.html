@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-success">{{ message }}</div>
+{% endfor %}
+
   <form method="POST">
     {{form.hidden_tag()}}
     <br>
@@ -13,5 +18,7 @@
     <br>
     <div class="form-group"> {{ form.submit(class="btn btn-primary") }}</div>
   </form>
+
+  {{emaild}}
 {% endblock %}
 
